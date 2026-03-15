@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <!-- 深空背景渐变 -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0a0a0f"/>
+    </radialGradient>
+    <!-- 金色光晕 -->
+    <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f0d080" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 金色线条渐变 -->
+    <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0d080"/>
+      <stop offset="50%" stop-color="#c9a84c"/>
+      <stop offset="100%" stop-color="#a07830"/>
+    </linearGradient>
+    <!-- 内圈渐变 -->
+    <radialGradient id="innerGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 发光滤镜 -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="circleClip">
+      <circle cx="200" cy="200" r="190"/>
+    </clipPath>
+  </defs>
+
+  <!-- 背景圆 -->
+  <circle cx="200" cy="200" r="200" fill="url(#bgGrad)"/>
+  <!-- 背景光晕 -->
+  <circle cx="200" cy="200" r="160" fill="url(#goldGlow)"/>
+
+  <!-- 最外圈装饰环 -->
+  <circle cx="200" cy="200" r="185" fill="none" stroke="url(#goldLine)" stroke-width="0.8" stroke-opacity="0.4"/>
+  <circle cx="200" cy="200" r="180" fill="none" stroke="url(#goldLine)" stroke-width="1.5" stroke-opacity="0.6"
+    stroke-dasharray="3 6"/>
+
+  <!-- 八卦方位点（外圈） -->
+  <g filter="url(#glow)">
+    <circle cx="200" cy="22"  r="3" fill="#f0d080"/>
+    <circle cx="327" cy="73"  r="3" fill="#f0d080"/>
+    <circle cx="378" cy="200" r="3" fill="#f0d080"/>
+    <circle cx="327" cy="327" r="3" fill="#f0d080"/>
+    <circle cx="200" cy="378" r="3" fill="#f0d080"/>
+    <circle cx="73"  cy="327" r="3" fill="#f0d080"/>
+    <circle cx="22"  cy="200" r="3" fill="#f0d080"/>
+    <circle cx="73"  cy="73"  r="3" fill="#f0d080"/>
+  </g>
+
+  <!-- 外圈八卦连接线 -->
+  <g stroke="url(#goldLine)" stroke-width="0.6" stroke-opacity="0.3">
+    <line x1="200" y1="22"  x2="327" y2="73"/>
+    <line x1="327" y1="73"  x2="378" y2="200"/>
+    <line x1="378" y1="200" x2="327" y2="327"/>
+    <line x1="327" y1="327" x2="200" y2="378"/>
+    <line x1="200" y1="378" x2="73"  y2="327"/>
+    <line x1="73"  y1="327" x2="22"  y2="200"/>
+    <line x1="22"  y1="200" x2="73"  y2="73"/>
+    <line x1="73"  y1="73"  x2="200" y2="22"/>
+  </g>
+
+  <!-- 主装饰圆环 -->
+  <circle cx="200" cy="200" r="155" fill="none" stroke="url(#goldLine)" stroke-width="2" stroke-opacity="0.8"/>
+  <circle cx="200" cy="200" r="150" fill="none" stroke="url(#goldLine)" stroke-width="0.5" stroke-opacity="0.4"/>
+
+  <!-- 八卦符文区（中间圈） -->
+  <!-- 乾 ☰ -->
+  <g transform="translate(200, 55)" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" opacity="0.9">
+    <line x1="-14" y1="-8" x2="14" y2="-8"/>
+    <line x1="-14" y1="0"  x2="14" y2="0"/>
+    <line x1="-14" y1="8"  x2="14" y2="8"/>
+  </g>
+  <!-- 坤 ☷ -->
+  <g transform="translate(200, 345)" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" opacity="0.9">
+    <line x1="-14" y1="-8" x2="-2" y2="-8"/>
+    <line x1="2"   y1="-8" x2="14" y2="-8"/>
+    <line x1="-14" y1="0"  x2="-2" y2="0"/>
+    <line x1="2"   y1="0"  x2="14" y2="0"/>
+    <line x1="-14" y1="8"  x2="-2" y2="8"/>
+    <line x1="2"   y1="8"  x2="14" y2="8"/>
+  </g>
+  <!-- 震 ☳ -->
+  <g transform="translate(345, 200)" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" opacity="0.9">
+    <line x1="-14" y1="-8" x2="14" y2="-8"/>
+    <line x1="-14" y1="0"  x2="-2" y2="0"/>
+    <line x1="2"   y1="0"  x2="14" y2="0"/>
+    <line x1="-14" y1="8"  x2="-2" y2="8"/>
+    <line x1="2"   y1="8"  x2="14" y2="8"/>
+  </g>
+  <!-- 巽 ☴ -->
+  <g transform="translate(55, 200)" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" opacity="0.9">
+    <line x1="-14" y1="-8" x2="-2" y2="-8"/>
+    <line x1="2"   y1="-8" x2="14" y2="-8"/>
+    <line x1="-14" y1="0"  x2="14" y2="0"/>
+    <line x1="-14" y1="8"  x2="14" y2="8"/>
+  </g>
+  <!-- 离 ☲ 东南 -->
+  <g transform="translate(308, 92)" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" opacity="0.7">
+    <line x1="-10" y1="-6" x2="10" y2="-6"/>
+    <line x1="-10" y1="0"  x2="-1" y2="0"/>
+    <line x1="1"   y1="0"  x2="10" y2="0"/>
+    <line x1="-10" y1="6"  x2="10" y2="6"/>
+  </g>
+  <!-- 坎 ☵ 西北 -->
+  <g transform="translate(92, 308)" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" opacity="0.7">
+    <line x1="-10" y1="-6" x2="-1" y2="-6"/>
+    <line x1="1"   y1="-6" x2="10" y2="-6"/>
+    <line x1="-10" y1="0"  x2="10" y2="0"/>
+    <line x1="-10" y1="6"  x2="-1" y2="6"/>
+    <line x1="1"   y1="6"  x2="10" y2="6"/>
+  </g>
+  <!-- 艮 ☶ 东北 -->
+  <g transform="translate(308, 308)" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" opacity="0.7">
+    <line x1="-10" y1="-6" x2="-1" y2="-6"/>
+    <line x1="1"   y1="-6" x2="10" y2="-6"/>
+    <line x1="-10" y1="0"  x2="-1" y2="0"/>
+    <line x1="1"   y1="0"  x2="10" y2="0"/>
+    <line x1="-10" y1="6"  x2="10" y2="6"/>
+  </g>
+  <!-- 兑 ☱ 西南 -->
+  <g transform="translate(92, 92)" fill="none" stroke="#c9a84c" stroke-width="2" stroke-linecap="round" opacity="0.7">
+    <line x1="-10" y1="-6" x2="-1" y2="-6"/>
+    <line x1="1"   y1="-6" x2="10" y2="-6"/>
+    <line x1="-10" y1="0"  x2="10" y2="0"/>
+    <line x1="-10" y1="6"  x2="10" y2="6"/>
+  </g>
+
+  <!-- 内发光圆 -->
+  <circle cx="200" cy="200" r="115" fill="url(#innerGrad)"/>
+  <circle cx="200" cy="200" r="115" fill="none" stroke="url(#goldLine)" stroke-width="1.5" stroke-opacity="0.7"/>
+  <circle cx="200" cy="200" r="110" fill="none" stroke="url(#goldLine)" stroke-width="0.5" stroke-opacity="0.3"/>
+
+  <!-- 阴阳鱼 核心 -->
+  <g filter="url(#softGlow)">
+    <!-- 阴阳大圆背景 -->
+    <circle cx="200" cy="200" r="90" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.5"/>
+
+    <!-- 左半（黑/阴）-->
+    <path d="M 200 110 A 90 90 0 0 0 200 290 A 45 45 0 0 1 200 200 A 45 45 0 0 0 200 110 Z" fill="#0a0a0f"/>
+    <!-- 右半（白/阳）-->
+    <path d="M 200 110 A 90 90 0 0 1 200 290 A 45 45 0 0 0 200 200 A 45 45 0 0 1 200 110 Z" fill="#c9a84c" fill-opacity="0.85"/>
+
+    <!-- 阳中阴点 -->
+    <circle cx="200" cy="155" r="16" fill="#0a0a0f"/>
+    <circle cx="200" cy="155" r="7" fill="#c9a84c" fill-opacity="0.9"/>
+    <!-- 阴中阳点 -->
+    <circle cx="200" cy="245" r="16" fill="#c9a84c" fill-opacity="0.85"/>
+    <circle cx="200" cy="245" r="7" fill="#0a0a0f"/>
+
+    <!-- 阴阳分界线（S曲线描边） -->
+    <path d="M 200 110 A 45 45 0 0 1 200 200 A 45 45 0 0 0 200 290 A 90 90 0 1 1 200 110 Z"
+      fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-opacity="0.6"/>
+    <!-- 外圆描边 -->
+    <circle cx="200" cy="200" r="90" fill="none" stroke="url(#goldLine)" stroke-width="2.5"/>
+  </g>
+
+  <!-- 中心光点 -->
+  <circle cx="200" cy="200" r="4" fill="#f0d080" filter="url(#strongGlow)"/>
+  <circle cx="200" cy="200" r="2" fill="white"/>
+
+  <!-- 底部文字 TAOANDLUCK.COM -->
+  <path id="bottomArc" d="M 50,200 A 150,150 0 0 0 350,200" fill="none"/>
+  <text font-family="'Cinzel Decorative', 'Times New Roman', serif"
+        font-size="13.5" fill="url(#goldLine)" letter-spacing="4" text-anchor="middle"
+        filter="url(#glow)">
+    <textPath href="#bottomArc" startOffset="50%">TAOANDLUCK · COM</textPath>
+  </text>
+
+  <!-- 顶部弧形文字 得道好运 -->
+  <path id="topArc" d="M 55,200 A 145,145 0 0 1 345,200" fill="none"/>
+  <text font-family="'Noto Serif SC', 'STSong', serif"
+        font-size="15" fill="url(#goldLine)" letter-spacing="8" text-anchor="middle"
+        filter="url(#glow)">
+    <textPath href="#topArc" startOffset="50%">得 · 道 · 好 · 运</textPath>
+  </text>
+
+</svg>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TaoAndLuck · Logo Brand Kit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #c9a84c; --gold-light: #f0d080;
+      --dark: #0a0a0f; --dark3: #1a1a2e; --dark4: #16213e;
+      --text: #e8dcc8; --text-dim: #a09070;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--dark); color:var(--text); font-family:'Noto Serif SC',serif; }
+
+    /* ─ 星空 ─ */
+    #stars { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+    .wrap { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:60px 24px; }
+
+    /* ─ Header ─ */
+    .brand-header { text-align:center; margin-bottom:70px; }
+    .brand-header h1 {
+      font-family:'Cinzel Decorative',cursive;
+      font-size:clamp(1.8rem,4vw,3rem);
+      color:var(--gold); letter-spacing:6px;
+      text-shadow:0 0 40px rgba(201,168,76,0.5);
+      margin-bottom:10px;
+    }
+    .brand-header p { color:var(--text-dim); letter-spacing:3px; font-size:.9rem; }
+    .gold-line { width:80px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:16px auto; }
+
+    /* ─ Logo 展示格 ─ */
+    .showcase-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:24px; margin-bottom:60px;
+    }
+    .showcase-card {
+      border-radius:20px; padding:40px 24px;
+      display:flex; flex-direction:column; align-items:center;
+      gap:20px; position:relative; overflow:hidden;
+    }
+    .showcase-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; bottom:0;
+      border-radius:20px;
+      border:1px solid rgba(201,168,76,0.3);
+      pointer-events:none;
+    }
+    .card-dark  { background:linear-gradient(135deg,#12121a,#1a1a2e); }
+    .card-deep  { background:linear-gradient(135deg,#0a0a0f,#0d0d1a); }
+    .card-light { background:linear-gradient(135deg,#f5f0e8,#ede5d0); }
+    .card-gold  { background:linear-gradient(135deg,#2a1f00,#1a1400); }
+    .card-label {
+      font-size:.75rem; letter-spacing:3px; color:var(--text-dim);
+      text-transform:uppercase; position:absolute; top:14px; left:20px;
+    }
+    .card-light .card-label { color:#888; }
+
+    .logo-svg { width:200px; height:200px; }
+    .logo-svg-sm { width:120px; height:120px; }
+    .logo-svg-xs { width:60px; height:60px; }
+
+    /* Logo 文字版 */
+    .logo-text {
+      display:flex; align-items:center; gap:16px;
+    }
+    .logo-text-icon { font-size:2.5rem; filter:drop-shadow(0 0 12px rgba(201,168,76,0.6)); }
+    .logo-text-words { text-align:left; }
+    .logo-text-main {
+      font-family:'Cinzel Decorative',cursive;
+      font-size:1.6rem; color:var(--gold);
+      letter-spacing:3px; line-height:1.2;
+      text-shadow:0 0 20px rgba(201,168,76,0.4);
+    }
+    .logo-text-sub { font-size:.75rem; color:var(--text-dim); letter-spacing:4px; margin-top:4px; }
+    .card-light .logo-text-main { color:#8b6914; text-shadow:none; }
+    .card-light .logo-text-sub  { color:#a08040; }
+
+    /* ─ 颜色规范 ─ */
+    .section-title { text-align:center; margin-bottom:36px; }
+    .section-title h2 { font-size:1.6rem; color:var(--gold); letter-spacing:4px; }
+    .section-title p  { color:var(--text-dim); font-size:.85rem; letter-spacing:2px; margin-top:6px; }
+
+    .color-grid {
+      display:flex; gap:16px; flex-wrap:wrap;
+      justify-content:center; margin-bottom:60px;
+    }
+    .color-swatch {
+      width:130px; text-align:center;
+    }
+    .swatch-box {
+      height:80px; border-radius:12px; margin-bottom:10px;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 4px 20px rgba(0,0,0,0.4);
+    }
+    .swatch-name { font-size:.8rem; color:var(--text); letter-spacing:1px; }
+    .swatch-hex  { font-size:.7rem; color:var(--text-dim); margin-top:3px; }
+
+    /* ─ 字体规范 ─ */
+    .font-showcase {
+      background:linear-gradient(135deg,var(--dark3),var(--dark4));
+      border:1px solid rgba(201,168,76,0.2);
+      border-radius:20px; padding:40px; margin-bottom:60px;
+    }
+    .font-item { margin-bottom:32px; padding-bottom:32px; border-bottom:1px solid rgba(201,168,76,0.1); }
+    .font-item:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+    .font-meta { font-size:.75rem; color:var(--text-dim); letter-spacing:2px; margin-bottom:12px; }
+    .font-display-1 { font-family:'Cinzel Decorative',cursive; font-size:2.5rem; color:var(--gold); letter-spacing:4px; }
+    .font-display-2 { font-family:'Noto Serif SC',serif; font-size:1.8rem; color:var(--text); letter-spacing:4px; }
+    .font-display-3 { font-family:'Noto Serif SC',serif; font-size:1rem; color:var(--text-dim); letter-spacing:3px; line-height:2; }
+
+    /* ─ 应用场景 ─ */
+    .usage-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px; margin-bottom:60px;
+    }
+    .usage-card {
+      background:linear-gradient(135deg,var(--dark3),var(--dark4));
+      border:1px solid rgba(201,168,76,0.2);
+      border-radius:16px; padding:24px;
+      display:flex; flex-direction:column; align-items:center; gap:12px;
+      text-align:center;
+    }
+    .usage-icon { font-size:2rem; }
+    .usage-title { font-size:.9rem; color:var(--gold); letter-spacing:2px; }
+    .usage-desc  { font-size:.75rem; color:var(--text-dim); line-height:1.7; }
+
+    /* ─ 下载按钮 ─ */
+    .download-section { text-align:center; margin-top:20px; }
+    .btn-dl {
+      display:inline-block;
+      background:linear-gradient(135deg,#c9a84c,#f0d080);
+      color:var(--dark); border:none; padding:14px 40px;
+      border-radius:30px; font-size:1rem;
+      font-family:'Noto Serif SC',serif;
+      font-weight:700; cursor:pointer; letter-spacing:2px;
+      text-decoration:none;
+      box-shadow:0 4px 20px rgba(201,168,76,0.3);
+      transition:all .3s; margin:8px;
+    }
+    .btn-dl:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(201,168,76,0.5); }
+    .btn-ghost-dl {
+      display:inline-block;
+      background:transparent; color:var(--gold);
+      border:1px solid var(--gold); padding:14px 40px;
+      border-radius:30px; font-size:1rem;
+      font-family:'Noto Serif SC',serif;
+      cursor:pointer; letter-spacing:2px;
+      text-decoration:none; transition:all .3s; margin:8px;
+    }
+    .btn-ghost-dl:hover { background:rgba(201,168,76,.1); transform:translateY(-2px); }
+
+    @media(max-width:600px){
+      .showcase-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="brand-header">
+    <h1>TAO &amp; LUCK</h1>
+    <div class="gold-line"></div>
+    <p>得道好运 · TAOANDLUCK.COM · 品牌视觉规范</p>
+  </div>
+
+  <!-- ══ Logo 展示 ══ -->
+  <div class="section-title">
+    <h2>品牌 Logo</h2>
+    <p>BRAND LOGO · 标准版 / 反色版 / 横排版</p>
+  </div>
+  <div class="showcase-grid">
+
+    <!-- 深色标准版 -->
+    <div class="showcase-card card-dark">
+      <span class="card-label">深色标准版</span>
+      <img src="logo.svg" class="logo-svg" alt="TaoAndLuck Logo"/>
+      <div style="text-align:center">
+        <div style="font-family:'Cinzel Decorative',cursive;color:var(--gold);font-size:1.2rem;letter-spacing:4px">TAO &amp; LUCK</div>
+        <div style="color:var(--text-dim);font-size:.7rem;letter-spacing:3px;margin-top:4px">得道好运</div>
+      </div>
+    </div>
+
+    <!-- 纯黑深邃版 -->
+    <div class="showcase-card card-deep">
+      <span class="card-label">极深版</span>
+      <img src="logo.svg" class="logo-svg" alt="TaoAndLuck Logo" style="filter:drop-shadow(0 0 20px rgba(201,168,76,0.6))"/>
+      <div class="logo-text">
+        <span class="logo-text-icon">☯</span>
+        <div class="logo-text-words">
+          <div class="logo-text-main">TaoAndLuck</div>
+          <div class="logo-text-sub">TAOANDLUCK.COM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 亮色版 -->
+    <div class="showcase-card card-light">
+      <span class="card-label" style="color:#888">亮色版</span>
+      <!-- 亮色 SVG（内联反色） -->
+      <svg viewBox="0 0 400 400" class="logo-svg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bgL" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f5f0e8"/>
+            <stop offset="100%" stop-color="#ede5d0"/>
+          </radialGradient>
+          <linearGradient id="goldL" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8b6914"/>
+            <stop offset="50%" stop-color="#a07830"/>
+            <stop offset="100%" stop-color="#6b500e"/>
+          </linearGradient>
+          <filter id="glowL">
+            <feGaussianBlur stdDeviation="2" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <circle cx="200" cy="200" r="200" fill="url(#bgL)"/>
+        <circle cx="200" cy="200" r="185" fill="none" stroke="url(#goldL)" stroke-width="1" stroke-opacity="0.5"/>
+        <circle cx="200" cy="200" r="180" fill="none" stroke="url(#goldL)" stroke-width="1.2" stroke-dasharray="3 6" stroke-opacity="0.4"/>
+        <circle cx="200" cy="200" r="155" fill="none" stroke="url(#goldL)" stroke-width="2" stroke-opacity="0.7"/>
+        <!-- 八卦点 -->
+        <circle cx="200" cy="22"  r="3" fill="#8b6914"/>
+        <circle cx="327" cy="73"  r="3" fill="#8b6914"/>
+        <circle cx="378" cy="200" r="3" fill="#8b6914"/>
+        <circle cx="327" cy="327" r="3" fill="#8b6914"/>
+        <circle cx="200" cy="378" r="3" fill="#8b6914"/>
+        <circle cx="73"  cy="327" r="3" fill="#8b6914"/>
+        <circle cx="22"  cy="200" r="3" fill="#8b6914"/>
+        <circle cx="73"  cy="73"  r="3" fill="#8b6914"/>
+        <!-- 阴阳（反色） -->
+        <path d="M 200 110 A 90 90 0 0 0 200 290 A 45 45 0 0 1 200 200 A 45 45 0 0 0 200 110 Z" fill="#a07830" opacity=".7"/>
+        <path d="M 200 110 A 90 90 0 0 1 200 290 A 45 45 0 0 0 200 200 A 45 45 0 0 1 200 110 Z" fill="#f5f0e8"/>
+        <circle cx="200" cy="155" r="16" fill="#f5f0e8"/>
+        <circle cx="200" cy="155" r="7" fill="#8b6914" opacity=".8"/>
+        <circle cx="200" cy="245" r="16" fill="#a07830" opacity=".7"/>
+        <circle cx="200" cy="245" r="7" fill="#f5f0e8"/>
+        <circle cx="200" cy="200" r="90" fill="none" stroke="url(#goldL)" stroke-width="2.5"/>
+        <circle cx="200" cy="200" r="4" fill="#8b6914"/>
+        <path id="bArcL" d="M 50,200 A 150,150 0 0 0 350,200" fill="none"/>
+        <text font-family="'Cinzel Decorative','Times New Roman',serif" font-size="13.5" fill="url(#goldL)" letter-spacing="4" text-anchor="middle">
+          <textPath href="#bArcL" startOffset="50%">TAOANDLUCK · COM</textPath>
+        </text>
+        <path id="tArcL" d="M 55,200 A 145,145 0 0 1 345,200" fill="none"/>
+        <text font-family="'Noto Serif SC','STSong',serif" font-size="15" fill="url(#goldL)" letter-spacing="8" text-anchor="middle">
+          <textPath href="#tArcL" startOffset="50%">得 · 道 · 好 · 运</textPath>
+        </text>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-text-icon" style="color:#8b6914">☯</span>
+        <div class="logo-text-words">
+          <div class="logo-text-main">TaoAndLuck</div>
+          <div class="logo-text-sub">得道好运</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 金底奢华版 -->
+    <div class="showcase-card card-gold">
+      <span class="card-label">奢华金底版</span>
+      <img src="logo.svg" class="logo-svg" alt="logo" style="filter:brightness(1.1) drop-shadow(0 0 25px rgba(240,208,128,0.8))"/>
+      <div style="text-align:center">
+        <div style="font-family:'Cinzel Decorative',cursive;color:#f0d080;font-size:1.3rem;letter-spacing:5px;text-shadow:0 0 20px rgba(240,208,128,0.6)">TAO &amp; LUCK</div>
+        <div style="color:#c9a84c;font-size:.7rem;letter-spacing:5px;margin-top:5px">得道好运 · FORTUNE AWAITS</div>
+      </div>
+    </div>
+
+    <!-- 小尺寸 favicon -->
+    <div class="showcase-card card-dark" style="padding:30px">
+      <span class="card-label">小图标 / Favicon</span>
+      <div style="display:flex;gap:24px;align-items:flex-end">
+        <div style="text-align:center">
+          <img src="logo.svg" class="logo-svg" alt="logo"/>
+          <div style="font-size:.65rem;color:var(--text-dim);margin-top:8px;letter-spacing:1px">200×200</div>
+        </div>
+        <div style="text-align:center">
+          <img src="logo.svg" class="logo-svg-sm" alt="logo"/>
+          <div style="font-size:.65rem;color:var(--text-dim);margin-top:8px;letter-spacing:1px">120×120</div>
+        </div>
+        <div style="text-align:center">
+          <img src="logo.svg" class="logo-svg-xs" alt="logo"/>
+          <div style="font-size:.65rem;color:var(--text-dim);margin-top:8px;letter-spacing:1px">60×60</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 横排版 -->
+    <div class="showcase-card card-dark" style="justify-content:center">
+      <span class="card-label">横排版（导航栏用）</span>
+      <div style="display:flex;align-items:center;gap:18px">
+        <img src="logo.svg" style="width:72px;height:72px" alt="logo"/>
+        <div>
+          <div style="font-family:'Cinzel Decorative',cursive;font-size:1.5rem;color:var(--gold);letter-spacing:3px;text-shadow:0 0 20px rgba(201,168,76,0.4)">TAO &amp; LUCK</div>
+          <div style="font-family:'Noto Serif SC',serif;font-size:.7rem;color:var(--text-dim);letter-spacing:5px;margin-top:3px">得道好运 · TAOANDLUCK.COM</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;margin-top:10px">
+        <img src="logo.svg" style="width:44px;height:44px" alt="logo"/>
+        <div style="font-family:'Cinzel Decorative',cursive;font-size:1rem;color:var(--gold);letter-spacing:2px">TaoAndLuck</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ 品牌色 ══ -->
+  <div class="section-title">
+    <h2>品牌色彩</h2>
+    <p>BRAND COLORS · 标准色值规范</p>
+  </div>
+  <div class="color-grid">
+    <div class="color-swatch">
+      <div class="swatch-box" style="background:linear-gradient(135deg,#f0d080,#c9a84c)"></div>
+      <div class="swatch-name">主金色</div>
+      <div class="swatch-hex">#C9A84C / #F0D080</div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-box" style="background:#0a0a0f"></div>
+      <div class="swatch-name">极夜黑</div>
+      <div class="swatch-hex">#0A0A0F</div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-box" style="background:linear-gradient(135deg,#1a1a2e,#16213e)"></div>
+      <div class="swatch-name">深空蓝</div>
+      <div class="swatch-hex">#1A1A2E / #16213E</div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-box" style="background:#8b1a1a"></div>
+      <div class="swatch-name">朱砂红</div>
+      <div class="swatch-hex">#8B1A1A</div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-box" style="background:#e8dcc8"></div>
+      <div class="swatch-name">羊皮白</div>
+      <div class="swatch-hex">#E8DCC8</div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-box" style="background:#a09070"></div>
+      <div class="swatch-name">古铜灰</div>
+      <div class="swatch-hex">#A09070</div>
+    </div>
+  </div>
+
+  <!-- ══ 字体 ══ -->
+  <div class="section-title">
+    <h2>品牌字体</h2>
+    <p>TYPOGRAPHY · 标准字体使用规范</p>
+  </div>
+  <div class="font-showcase">
+    <div class="font-item">
+      <div class="font-meta">主标题字体 · Cinzel Decorative · 英文品牌名/大标题</div>
+      <div class="font-display-1">TAO &amp; LUCK</div>
+    </div>
+    <div class="font-item">
+      <div class="font-meta">中文衬线 · Noto Serif SC · 正文/副标题</div>
+      <div class="font-display-2">得道好运 · 天道命理 · 探索命运之道</div>
+    </div>
+    <div class="font-item">
+      <div class="font-meta">正文小字 · Noto Serif SC Regular · 说明文字/签文解读</div>
+      <div class="font-display-3">山重水复疑无路，柳暗花明又一村。此签中吉，当前虽有困惑，转机将至，不必灰心，换个角度看问题，自有出路。</div>
+    </div>
+  </div>
+
+  <!-- ══ 应用场景 ══ -->
+  <div class="section-title">
+    <h2>应用场景</h2>
+    <p>BRAND USAGE · Logo 使用指引</p>
+  </div>
+  <div class="usage-grid">
+    <div class="usage-card">
+      <div class="usage-icon">🌐</div>
+      <div class="usage-title">网站导航</div>
+      <div class="usage-desc">横排版 Logo（44px高），深色背景，金色文字</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-icon">📱</div>
+      <div class="usage-title">App 图标</div>
+      <div class="usage-desc">圆形 Logo，深空背景，尺寸 512×512</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-icon">🔖</div>
+      <div class="usage-title">社交媒体</div>
+      <div class="usage-desc">圆形标准版，建议配金色边框光晕效果</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-icon">📄</div>
+      <div class="usage-title">印刷品</div>
+      <div class="usage-desc">亮色版 Logo，深金色 CMYK：0/20/70/30</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-icon">✉️</div>
+      <div class="usage-title">邮件签名</div>
+      <div class="usage-desc">横排版，高度 40px，白底用亮色版</div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-icon">🔮</div>
+      <div class="usage-title">Favicon</div>
+      <div class="usage-desc">极简版（仅☯符号），32×32px ICO 格式</div>
+    </div>
+  </div>
+
+  <!-- 下载 -->
+  <div class="download-section">
+    <a href="logo.svg" download="TaoAndLuck-Logo.svg" class="btn-dl">⬇ 下载 SVG Logo</a>
+    <a href="index.html" class="btn-ghost-dl">← 返回主站</a>
+  </div>
+
+</div>
+
+<script>
+// 星空
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+const stars = Array.from({length:150},()=>({
+  x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+  r:Math.random()*1.2+0.3, a:Math.random(), sp:Math.random()*.005+.002
+}));
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{ s.a+=s.sp; const al=(Math.sin(s.a)+1)/2*.7+.1; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(240,208,128,${al})`; ctx.fill(); });
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
