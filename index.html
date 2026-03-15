@@ -641,18 +641,18 @@
 <script>
 // ── 数据 ──
 const ZODIACS = [
-  {name:'鼠',icon:'🐭',en:'Rat'},
-  {name:'牛',icon:'🐂',en:'Ox'},
-  {name:'虎',icon:'🐯',en:'Tiger'},
-  {name:'兔',icon:'🐰',en:'Rabbit'},
-  {name:'龙',icon:'🐲',en:'Dragon'},
-  {name:'蛇',icon:'🐍',en:'Snake'},
-  {name:'马',icon:'🐴',en:'Horse'},
-  {name:'羊',icon:'🐑',en:'Goat'},
-  {name:'猴',icon:'🐵',en:'Monkey'},
-  {name:'鸡',icon:'🐓',en:'Rooster'},
-  {name:'狗',icon:'🐕',en:'Dog'},
-  {name:'猪',icon:'🐷',en:'Pig'},
+  {name:'鼠',icon:'🐭',en:'Rat',years:'1924·1936·1948·1960·1972·1984·1996·2008·2020'},
+  {name:'牛',icon:'🐂',en:'Ox',years:'1925·1937·1949·1961·1973·1985·1997·2009·2021'},
+  {name:'虎',icon:'🐯',en:'Tiger',years:'1926·1938·1950·1962·1974·1986·1998·2010·2022'},
+  {name:'兔',icon:'🐰',en:'Rabbit',years:'1927·1939·1951·1963·1975·1987·1999·2011·2023'},
+  {name:'龙',icon:'🐲',en:'Dragon',years:'1928·1940·1952·1964·1976·1988·2000·2012·2024'},
+  {name:'蛇',icon:'🐍',en:'Snake',years:'1929·1941·1953·1965·1977·1989·2001·2013·2025'},
+  {name:'马',icon:'🐴',en:'Horse',years:'1930·1942·1954·1966·1978·1990·2002·2014·2026'},
+  {name:'羊',icon:'🐑',en:'Goat',years:'1931·1943·1955·1967·1979·1991·2003·2015'},
+  {name:'猴',icon:'🐵',en:'Monkey',years:'1932·1944·1956·1968·1980·1992·2004·2016'},
+  {name:'鸡',icon:'🐓',en:'Rooster',years:'1933·1945·1957·1969·1981·1993·2005·2017'},
+  {name:'狗',icon:'🐕',en:'Dog',years:'1934·1946·1958·1970·1982·1994·2006·2018'},
+  {name:'猪',icon:'🐷',en:'Pig',years:'1935·1947·1959·1971·1983·1995·2007·2019'},
 ];
 
 const STARS = [
@@ -804,9 +804,13 @@ function renderHeroDate() {
   if (el) el.textContent = '今日：' + text;
 }
 
-// ── 星座 API ──
-// 生肖与星座映射（性格相近原则）
-const ZODIAC_STAR_MAP = [2,3,4,5,6,7,8,9,10,11,0,1]; // 鼠牛虎兔龙蛇马羊猴鸡狗猪 → 对应STARS索引
+// ── 运势 API ──
+// 生肖英文名（与API对应）
+const ZODIAC_EN = ['rat','ox','tiger','rabbit','dragon','snake','horse','goat','monkey','rooster','dog','pig'];
+
+// 每日运势缓存
+let ZODIAC_FORTUNES = {}; // { 'rat': { overview, love, career, wealth, tips, lucky_numbers, lucky_colors }, ... }
+let STAR_FORTUNES = {};   // { 'aries': '运势文字', ... }
 
 // 每日缓存 key
 function getTodayKey() {
@@ -814,13 +818,29 @@ function getTodayKey() {
   return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
 }
 
-// 拉取单个星座运势（带缓存）
-async function fetchStarFortune(signEn) {
-  const cacheKey = 'fortune_' + getTodayKey() + '_' + signEn.toLowerCase();
+// 拉取单个生肖运势（带缓存）
+async function fetchZodiacFortune(signEn) {
+  const cacheKey = 'zodiac_v1_' + getTodayKey() + '_' + signEn;
   const cached = localStorage.getItem(cacheKey);
   if (cached) return JSON.parse(cached);
   try {
-    const res = await fetch('https://freehoroscopeapi.com/api/v1/get-horoscope/daily?sign=' + signEn.toLowerCase());
+    const res = await fetch('https://fortune-proxy.qingwei-pan.workers.dev?type=zodiac&sign=' + signEn);
+    const json = await res.json();
+    if (json && json.data && json.data.overview) {
+      localStorage.setItem(cacheKey, JSON.stringify(json.data));
+      return json.data;
+    }
+  } catch(e) {}
+  return null;
+}
+
+// 拉取单个星座运势（带缓存）
+async function fetchStarFortune(signEn) {
+  const cacheKey = 'fortune_v2_' + getTodayKey() + '_' + signEn.toLowerCase();
+  const cached = localStorage.getItem(cacheKey);
+  if (cached) return JSON.parse(cached);
+  try {
+    const res = await fetch('https://fortune-proxy.qingwei-pan.workers.dev?type=star&sign=' + signEn.toLowerCase());
     const json = await res.json();
     const text = json && json.data && json.data.horoscope ? json.data.horoscope.trim() : null;
     if (text) {
@@ -831,8 +851,13 @@ async function fetchStarFortune(signEn) {
   return null;
 }
 
+// 预加载全部12生肖（并行）
+async function preloadAllZodiacFortunes() {
+  const promises = ZODIAC_EN.map(en => fetchZodiacFortune(en).then(d => { if(d) ZODIAC_FORTUNES[en] = d; }));
+  await Promise.all(promises);
+}
+
 // 预加载全部12星座（并行）
-let STAR_FORTUNES = {}; // { 'aries': '...', ... }
 async function preloadAllStarFortunes() {
   const promises = STARS.map(s => fetchStarFortune(s.en).then(t => { if(t) STAR_FORTUNES[s.en.toLowerCase()] = t; }));
   await Promise.all(promises);
@@ -844,16 +869,14 @@ function renderZodiacs() {
   if (!grid) return;
   grid.innerHTML = ZODIACS.map(function(z, i) {
     const score = getFortuneScore(i, 1);
-    const starIdx = ZODIAC_STAR_MAP[i];
-    const starEn = STARS[starIdx].en.toLowerCase();
-    const apiText = STAR_FORTUNES[starEn];
-    const tip = apiText ? apiText.substring(0, 22) + '…' : '运势加载中…';
+    const data = ZODIAC_FORTUNES[ZODIAC_EN[i]];
+    const tipText = data && data.overview ? data.overview.substring(0, 22) + '…' : '运势加载中…';
     return '<div class="zodiac-card" onclick="showFortuneDetail(\'zodiac\',' + i + ')">' +
       getBadge(score) +
       '<div class="zodiac-icon">' + z.icon + '</div>' +
       '<div class="zodiac-name">' + z.name + '年</div>' +
       '<div class="zodiac-score">' + renderStars(score) + '</div>' +
-      '<div class="zodiac-tip">' + tip + '</div>' +
+      '<div class="zodiac-tip">' + tipText + '</div>' +
       '</div>';
   }).join('');
 }
@@ -895,29 +918,64 @@ function showFortuneDetail(type, index) {
   const nums = [Math.floor(rng() * 9 + 1), Math.floor(rng() * 9 + 1)];
   const dir = LUCKY_DIR[Math.floor(rng() * LUCKY_DIR.length)];
 
-  // 获取 API 运势文字
-  const starIdx = type === 'zodiac' ? ZODIAC_STAR_MAP[index] : index;
-  const starEn = STARS[starIdx].en.toLowerCase();
-  const apiText = STAR_FORTUNES[starEn] || null;
+  // 获取运势文字：属相用真实生肖API，星座用星座API
+  let fortuneText = null;
+  let zodiacApiData = null;
+  if (type === 'zodiac') {
+    zodiacApiData = ZODIAC_FORTUNES[ZODIAC_EN[index]] || null;
+    fortuneText = zodiacApiData ? zodiacApiData.overview : null;
+  } else {
+    const starEn = STARS[index].en.toLowerCase();
+    fortuneText = STAR_FORTUNES[starEn] || null;
+  }
 
   const content = document.getElementById('modal-content');
+
+  // 生肖弹窗：显示详细分项运势
+  let fortuneSection = '';
+  if (type === 'zodiac' && zodiacApiData) {
+    fortuneSection =
+      '<div class="modal-section">' +
+        '<div class="modal-label">· 今日总览 ·</div>' +
+        '<div class="overall-text api-fortune">' + (zodiacApiData.overview || '') + '</div>' +
+      '</div>' +
+      '<div class="modal-section">' +
+        '<div class="modal-label">· 运势详情 ·</div>' +
+        '<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">' +
+          (zodiacApiData.love    ? '<div style="font-size:0.85rem;color:var(--text)"><span style="color:var(--gold);margin-right:6px;">❤ 感情</span>' + zodiacApiData.love    + '</div>' : '') +
+          (zodiacApiData.career  ? '<div style="font-size:0.85rem;color:var(--text)"><span style="color:var(--gold);margin-right:6px;">💼 事业</span>' + zodiacApiData.career  + '</div>' : '') +
+          (zodiacApiData.wealth  ? '<div style="font-size:0.85rem;color:var(--text)"><span style="color:var(--gold);margin-right:6px;">💰 财运</span>' + zodiacApiData.wealth  + '</div>' : '') +
+          (zodiacApiData.tips    ? '<div style="font-size:0.85rem;color:var(--text-dim);font-style:italic;margin-top:4px;">💡 ' + zodiacApiData.tips + '</div>' : '') +
+        '</div>' +
+      '</div>';
+  } else if (type === 'zodiac') {
+    fortuneSection =
+      '<div class="modal-section">' +
+        '<div class="modal-label">· 今日运势 ·</div>' +
+        '<div class="overall-text">运势数据加载中，请稍后再试…</div>' +
+      '</div>';
+  } else {
+    fortuneSection =
+      '<div class="modal-section">' +
+        '<div class="modal-label">· 今日运势 ·</div>' +
+        (fortuneText
+          ? '<div class="overall-text api-fortune">' + fortuneText + '</div>'
+          : '<div class="overall-text">运势数据加载中，请稍后再试…</div>'
+        ) +
+      '</div>';
+  }
+
   content.innerHTML =
     '<div class="modal-icon">' + item.icon + '</div>' +
     '<h3>' + item.name + (type === 'zodiac' ? '年' : '') + '</h3>' +
-    '<p class="modal-sub">' + (type === 'star' ? item.date + ' · ' : '') + item.en + '</p>' +
+    '<p class="modal-sub">' + (type === 'star' ? item.date + ' · ' + item.en : item.years) + '</p>' +
     '<div class="fortune-meter">' +
       makeBar('感情', loveScore) +
       makeBar('事业', careerScore) +
       makeBar('财运', wealthScore) +
       makeBar('健康', healthScore) +
     '</div>' +
-    '<div class="modal-section">' +
-      '<div class="modal-label">· 今日运势 ·</div>' +
-      (apiText
-        ? '<div class="overall-text api-fortune">' + apiText + '</div>'
-        : '<div class="overall-text">运势数据加载中，请稍后再试…</div>'
-      ) +
-    '</div>' +
+    fortuneSection +
     '<div class="modal-section">' +
       '<div class="modal-label">· 今日幸运 ·</div>' +
       '<div class="lucky-grid">' +
@@ -929,14 +987,23 @@ function showFortuneDetail(type, index) {
 
   document.getElementById('fortune-modal').classList.add('open');
 
-  // 如果还没加载到，异步拉取并刷新
-  if (!apiText) {
-    fetchStarFortune(STARS[starIdx].en).then(function(text) {
+  // 如果数据还未加载，异步拉取后刷新
+  if (type === 'zodiac' && !zodiacApiData) {
+    fetchZodiacFortune(ZODIAC_EN[index]).then(function(data) {
+      if (data) {
+        ZODIAC_FORTUNES[ZODIAC_EN[index]] = data;
+        showFortuneDetail('zodiac', index); // 重新渲染弹窗
+        renderZodiacs();
+      }
+    });
+  } else if (type === 'star' && !fortuneText) {
+    const starEn = STARS[index].en.toLowerCase();
+    fetchStarFortune(STARS[index].en).then(function(text) {
       if (text) {
         STAR_FORTUNES[starEn] = text;
         const el = content.querySelector('.overall-text');
         if (el) { el.classList.add('api-fortune'); el.textContent = text; }
-        renderZodiacs(); renderStarSigns();
+        renderStarSigns();
       }
     });
   }
@@ -1123,8 +1190,11 @@ function init() {
   document.getElementById('paywall').addEventListener('click', function(e) {
     if (e.target === this) closePaywall();
   });
-  // 异步预加载全部星座运势
-  preloadAllStarFortunes().then(function() {
+  // 异步并行预加载生肖和星座运势
+  Promise.all([
+    preloadAllZodiacFortunes(),
+    preloadAllStarFortunes()
+  ]).then(function() {
     renderZodiacs();
     renderStarSigns();
   });
